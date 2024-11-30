@@ -50,11 +50,19 @@
 >	辑器）  
 >- mkdir 创建目录
 >- alias 起别名命令 类似c中#define
+>- rm 删除文件/目录
 
 #### 2.2、git相关指令
 
->1. [git add](####3.5.1、提交到仓库)
->2. [git commit ](####3.5.1、提交到仓库)
+>1. [git add](####3.5.1、提交到仓库) 提交到暂存区
+>2. [git commit ](####3.5.1、提交到仓库) 提交到本地仓库
+>3. [git log ](3.5.3、查看提交日志) 查看日志
+>4. [git reset  ](####3.5.4、版本回退) 版本回退
+>5. [git reflog ](####3.5.5、查看所有操作记录（包括已经被删除的操作记录）)  查看所有操作记录（包括已经被删除的操作记录）
+>6. [git ls-files](####3.5.6、查看仓库文件) 查看仓库文件
+>7. [ .gitignore ](####3.5.7 、忽略文件) 忽略文件
+>8. [git diff ](#####3.5.8、查看差异) 查看差异
+>9. [git rm ](####3.5.9、删除文件) 删除文件
 >
 >
 
@@ -183,7 +191,7 @@
 >>绿色文件：未放入仓库（已经放入暂存区）。
 >>放入仓库文件，不显示。
 
-##### 3.5.3、查看提交日志  
+##### 3.5.3、查看提交日志
 
 >```html
 >1、git log [option]	
@@ -270,7 +278,7 @@
 >
 >-h或者-help :列出其他选项
 
-##### 3.5.7 忽略文件
+##### 3.5.7 、忽略文件
 
 >可以在工作目录中创建一个名为 .gitignore 的文件（文件名称固定），列出要忽略的文件模式。  
 >
@@ -280,21 +288,117 @@
 ># no .a files 
 ># 忽略所有.a文件
 >*.a
+>
 ># but do track lib.a, even though you're ignoring .a files above
 ># 但跟踪所有的lib.a文件，即使你在前面忽略了所有.a文件
 >!lib.a
+>
 ># only ignore the TODO file in the current directory, not subdir/TODO
 ># 只忽略当前目录下的T0D0文件，而不忽略subdir/TODO 	
 >/TODO
+>
 ># ignore all files in the build/ directory
 ># 忽略任何目录下的build/ directory
 >build/
+>
 ># ignore doc/notes.txt, but not doc/server/arch.txt
 ># 忽略 doc/notes.txt，但是不忽略doc/server/arch.txt
 >doc/*.txt
+>
 ># ignore all .pdf files in the doc/ directory
 ># 忽略doc/目录及其所有子目录下的.pdf文件
 >doc/**/*.pdf
 >```
 >
->[github/gitignore: A collection of useful .gitignore templates](https://github.com/github/gitignore?tab=readme-ov-file)
+>[GitHub官方提供的 .gitignore 文件模板](https://github.com/github/gitignore?tab=readme-ov-file)
+>
+>忽略命令：
+>
+>```html
+>忽略xx.x文件
+>git update-index --assume-unchanged xx.x
+>
+>恢复跟踪该文件
+>git update-index --no-assume-unchanged xx.x
+>
+>```
+>
+>>不会更改`.gitignore`文件的内容。
+
+##### 3.5.8、查看差异
+
+>```html
+>git diff [options] [source1] [source2]
+>```
+>
+>>source1 和 source2：
+>>可以是提交哈希值、分支名、标签名等，用于指定要比较的两个版本的来源。如果不指定，则有不同的默认行为。
+>>options：
+>>	--staged或--cached：比较暂存区和上次提交之间的差异。
+>>	--name-only：只显示发生变化的文件名，而不显示具体的差异内容。
+>>	--name-status：显示发生变化的文件名以及变化的状态（A 表示添加、D 表示删除、M 表示修改）。
+>>	-w或--ignore-all-space：忽略空白字符的差异。
+>
+>
+>
+>```html
+>git diff  
+>```
+>
+>这将显示自上次提交以来对所有文件所做的更改。
+>
+>```html
+>git diff --staged
+>```
+>
+>此命令显示已经添加到暂存区但还没有提交的更改（本地仓库）。
+>
+>```html
+>git diff branch1 branch2
+>```
+>
+>将显示 `branch1` 和 `branch2` 分支之间的差异。
+>
+>```html
+>git diff --name-only
+>```
+>
+>只显示发生变化的[文件名](https://so.csdn.net/so/search?q=文件名&spm=1001.2101.3001.7020)。
+>
+>```html
+>git diff --name-status
+>```
+>
+>比较特定提交之间的差异。
+>
+>```html
+>git diff commitA commitB
+>```
+>
+>这里 `commitA` 和 `commitB` 可以是提交哈希值、分支名或标签名等。
+>
+>```html
+>git diff -U5 commitA commitB
+>```
+>
+>此命令将显示 `commitA` 和 `commitB` 之间的差异，并设置 5 行上下文。默认显示3行上下文
+>
+>```html
+>git diff HEAD~n HEAD
+>```
+>
+>此命令将显示前n个版本与上版本的比较。
+>
+>![](img/git_Diff.png)
+
+##### 3.5.9、删除文件
+
+>```html
+>git rm 
+>```
+>
+>![](img/git_Rm.png)
+
+#### 3.6、分支
+
+##### 3.6.1、
