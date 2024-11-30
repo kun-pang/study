@@ -41,13 +41,260 @@
 
 ### 2、常用命令
 
-会使用linux的指令
+#### 2.1、linux的相关指令
 
 >- ls/ll 查看当前目录  
 >- cat 查看文件内容  
 >- touch 创建文件  
 >- vi vi编辑器（使用vi编辑器是为了方便展示效果，学员可以记事本、editPlus、notPad++等其它编
 >	辑器）  
+>- mkdir 创建目录
+>- alias 起别名命令 类似c中#define
 
+#### 2.2、git相关指令
 
+>1. [git add](####3.5.1、提交到仓库)
+>2. [git commit ](####3.5.1、提交到仓库)
+>
+>
 
+### 3、git指令与操作
+
+#### 3.1、基本配置
+
+>Git GUI：Git提供的图形界面工具
+>Git Bash：Git提供的命令行工具
+>当安装Git后首先要做的事情是设置用户名称和email地址。这是非常重要的，因为每次Git提交都会使用
+>该用户信息  
+
+>a、打开git bash
+>
+>b、设置用户信息
+>
+>```txt
+>git config --global user.name “itcast”
+>git config --global user.email “hello@itcast.cn”
+>```
+>
+>>“itcast”:用户名
+>>
+>>“hello@itcast.cn”：邮箱（可以是不存在的）
+>
+>![](img/git配置用户信息.png)
+>
+>c、查看配置信息  
+>
+>```txt
+>git config --global user.name
+>git config --global user.email
+>```
+
+#### 3.2、为常用指令配置别名（可选）  
+
+>Ⅰ、
+>
+>```txt
+>1. 打开用户目录，创建 .bashrc 文件
+>部分windows系统不允许用户创建点号开头的文件，可以打开gitBash,执行 touch ~/.bashrc
+>2.在 .bashrc 文件中输入如下内容：
+>	#用于输出git提交日志
+>	alias git-log='git log --pretty=oneline --all --graph --abbrev-commit'
+>	#用于输出当前目录所有文件及基本信息
+>	alias ll='ls -al'
+>3. 打开gitBash，执行 source ~/.bashrc
+>```
+>
+>Ⅱ、
+>
+>```html
+>打开gitBash，直接使用alias命令创建别名
+>alias 别名='具体命令'
+>```
+
+#### 3.3、解决GitBash乱码问题  
+
+>1. 打开GitBash执行下面命令  
+>
+>```txt
+>git config --global core.quotepath false
+>```
+>
+>2.${git_home}/etc/bash.bashrc 文件最后加入下面两行  
+>
+>```txt
+>export LANG="zh_CN.UTF-8"
+>export LC_ALL="zh_CN.UTF-8"
+>```
+>
+>>新版git，没有这个问题。
+>>
+>>${git_home}为git的安装目录，可以通过where git 来寻找。
+
+#### 3.4、获取本地仓库
+
+>1）在电脑的任意位置创建一个空目录（例如test）作为我们的本地Git仓库
+>2）进入这个目录(可以是已经存在的)中，点击右键打开Git bash窗口
+>3）执行命令git init
+>4）如果创建成功后可在文件夹下看到隐藏的.git目录  
+>
+>![](img/git_Init.png)
+
+#### 3.5、基础操作
+
+##### 3.5.1、提交到仓库
+
+![](img/git状态.png)
+
+>![](img/git未提交到缓存区.png)
+>
+>1. git add (工作区 --> 暂存区)
+>
+>	![](img/git提交到缓存区.png)
+>
+>	```html
+>	git add [文件/目录名/.]
+>	```
+>
+>	>[文件名/.] 需要添加的文件或者该目录下的全部文件和目录
+>
+>	
+>
+>2. git commit (暂存区 --> 本地仓库)  
+>
+>![](img/git提交到仓库.png)
+>
+>```html
+>1、git commit -m"提交信息"
+>2、git commit -am"提交信息" 
+>```
+>
+>>-m：message，提交信息的意思
+>>
+>>-am：git add与git commit合在一起的写法
+
+##### 3.5.2、查看状态
+
+>```html
+>git status
+>```
+>
+>>红色文件：未放入暂存区。
+>>
+>>绿色文件：未放入仓库（已经放入暂存区）。
+>>放入仓库文件，不显示。
+
+##### 3.5.3、查看提交日志  
+
+>```html
+>1、git log [option]	
+>2、git log --pretty=oneline --all --graph --abbrev-commit    <==等价于==>     git-log
+>```
+>
+>>[option]可选：
+>>
+>>​	--all 显示所有分支
+>>​	--pretty=oneline 将提交信息显示为一行
+>>​	--abbrev-commit 使得输出的commitId更简短
+>>​	--graph 以图的形式显示  
+>>
+>>第二个指令，前面给它起了别名叫git-log
+>
+>![](img/git_Log.png)
+
+##### 3.5.4、版本回退
+
+>```html
+>1、git reset --soft [commitID]
+>2、git reset --hard [commitID]
+>3、git reset --mixed [commitID]
+>```
+>
+>>[commitID]：commitID 可以使用 git-log 或 git log 指令查看（上图中的哈希值）  
+>>--soft：回退的时候，保留工作区和暂存区中的回退文件/目录
+>>
+>>--hard：回退的时候，删除工作区和暂存区中的回退文件/目录
+>>
+>>--mixed：回退的时候，保留工作区中的回退文件/目录，删除暂存区中的回退文件/目录
+>
+>![](img/git_Reset三种图示.png)
+
+##### 3.5.5、查看所有操作记录（包括已经被删除的操作记录）
+
+>```html
+>git reflog
+>```
+>
+>可以查看所有分支的所有操作记录（包括已经被删除的 commit 记录和 reset 的操作）
+
+##### 3.5.6、查看仓库文件
+
+>```html
+>git ls-files
+>```
+>
+>不带选项：默认情况下，git ls-files 列出所有已跟踪的文件，包括已修改但尚未暂存的文件。
+>
+>```html
+>git ls-files -c
+>```
+>
+>-c 或 --cached：只列出已经通过 git add 添加到暂存区的文件。
+>
+>```html
+>git ls-files -o
+>```
+>
+>-o 或 --others：只列出未跟踪的文件。
+>
+>```html
+>git ls-files -s
+>```
+>
+>-s 或 --stage：显示文件的状态信息，包括文件的模式(例如，100644 表示普通文件，100755 表示[可执行文件](https://so.csdn.net/so/search?q=可执行文件&spm=1001.2101.3001.7020))和 SHA-1 哈希值。
+>
+>```html
+>git ls-files -t
+>```
+>
+>-t：只列出已跟踪的文件。
+>
+>```html
+>git ls-files -u
+>```
+>
+>-u 或 --unmerged：只列出有合并冲突的文件。
+>
+>```html
+>git ls-files -h
+>```
+>
+>-h或者-help :列出其他选项
+
+##### 3.5.7 忽略文件
+
+>可以在工作目录中创建一个名为 .gitignore 的文件（文件名称固定），列出要忽略的文件模式。  
+>
+>忽略文件模板
+>
+>``` .gitignore 
+># no .a files 
+># 忽略所有.a文件
+>*.a
+># but do track lib.a, even though you're ignoring .a files above
+># 但跟踪所有的lib.a文件，即使你在前面忽略了所有.a文件
+>!lib.a
+># only ignore the TODO file in the current directory, not subdir/TODO
+># 只忽略当前目录下的T0D0文件，而不忽略subdir/TODO 	
+>/TODO
+># ignore all files in the build/ directory
+># 忽略任何目录下的build/ directory
+>build/
+># ignore doc/notes.txt, but not doc/server/arch.txt
+># 忽略 doc/notes.txt，但是不忽略doc/server/arch.txt
+>doc/*.txt
+># ignore all .pdf files in the doc/ directory
+># 忽略doc/目录及其所有子目录下的.pdf文件
+>doc/**/*.pdf
+>```
+>
+>[github/gitignore: A collection of useful .gitignore templates](https://github.com/github/gitignore?tab=readme-ov-file)
