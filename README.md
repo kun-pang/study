@@ -11,3 +11,5 @@
 后续会看一下[尚硅谷Git入门到精通全套教程](https://www.bilibili.com/video/BV1vy4y1s7k6?spm_id_from=333.788.videopod.episodes&vd_source=5f8610a33e469a605635adbbdcc8c98e),继续对笔记进行完善。
 
 
+
+笔记在/git/git.md
