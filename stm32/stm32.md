@@ -569,6 +569,9 @@ CK\_CNT\_OV = CK\_CNT / (ARR + 1)
 加入计数器计数频率后:
 					       CK\_CNT\_OV= CK\_PSC / (PSC + 1) / (ARR + 1)
 \\
+工作流程：
+对CK\_PSC（时钟频率，单位;hz）缩小成（（PSC+1）/CK\_PSC）（频率,单位;hz），计数（ARR+1）次，就是计时（(PSC+1)*(ARR +1) / CK\_PSC）(时间，单位：s)					       
+\\
 计数器溢出时间：1/CK\_CNT\_OV
 $$
 
